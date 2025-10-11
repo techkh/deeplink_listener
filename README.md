@@ -8,12 +8,12 @@
 Handling Custom Deep Links and Universal Links
 Deep linking allows your app to respond to links, whether they come from emails, websites, or other apps. There are two main types:
 
-** 1. Custom URL Schemes – Works on both iOS and Android, but users are prompted if the app is not installed. **
-** 2. Universal Links / App Links – Standardized, secure, and seamless links that open the app if installed or fallback to the website if not. **
+1. Custom URL Schemes – Works on both iOS and Android, but users are prompted if the app is not installed. 
+2. Universal Links / App Links – Standardized, secure, and seamless links that open the app if installed or fallback to the website if not. 
 
 ## Befor use
 if you are using Universal links  your must be config you servr support IOS and Android handle deeplink
-** Android to create https://youserveer.com/.well-known/assetlinks.json
+Android to create https://youserveer.com/.well-known/assetlinks.json
 ```yaml
 [
   {
@@ -26,7 +26,7 @@ if you are using Universal links  your must be config you servr support IOS and 
   }
 ]
 ```
-** IOS to create https://yourdomain.com/.well-known/apple-app-site-association **
+IOS to create https://yourdomain.com/.well-known/apple-app-site-association
 ```yaml
 {
   "applinks": {
@@ -57,7 +57,7 @@ dependencies:
 
 ### Basic setup
 
-*The complete example is available [here](https://github.com/techkh/deeplink_listener/tree/prod/example/lib).*
+The complete example is available [here](https://github.com/techkh/deeplink_listener/tree/prod/example/lib).
 
 ```dart
 create your _linkSub  

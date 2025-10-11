@@ -1,4 +1,4 @@
-package com.example.deeplink_listener_example
+package com.example.deeplink_listener
 
 import io.flutter.embedding.android.FlutterActivity
 
