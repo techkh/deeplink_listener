@@ -8,8 +8,8 @@
 Handling Custom Deep Links and Universal Links
 Deep linking allows your app to respond to links, whether they come from emails, websites, or other apps. There are two main types:
 
-** 1. Custom URL Schemes – Works on both iOS and Android, but users are prompted if the app is not installed.
-** 2. Universal Links / App Links – Standardized, secure, and seamless links that open the app if installed or fallback to the website if not.
+** 1. Custom URL Schemes – Works on both iOS and Android, but users are prompted if the app is not installed. **
+** 2. Universal Links / App Links – Standardized, secure, and seamless links that open the app if installed or fallback to the website if not. **
 
 ## Befor use
 if you are using Universal links  your must be config you servr support IOS and Android handle deeplink
@@ -26,7 +26,7 @@ if you are using Universal links  your must be config you servr support IOS and 
   }
 ]
 ```
-** IOS to create https://yourdomain.com/.well-known/apple-app-site-association
+** IOS to create https://yourdomain.com/.well-known/apple-app-site-association **
 ```yaml
 {
   "applinks": {
@@ -120,13 +120,13 @@ void dispose() {
 ```
 
 *** Deeplink Config See ***
-** 1. [Andoid Deeplink](https://github.com/techkh/deeplink_listener/blob/prod/example/android/app/src/main/AndroidManifest.xml)
+1. [Andoid Deeplink](https://github.com/techkh/deeplink_listener/blob/prod/example/android/app/src/main/AndroidManifest.xml)
 
-** 2. [IOS Deeplink](https://github.com/techkh/deeplink_listener/blob/prod/example/ios/Runner/Info.plist)
+2. [IOS Deeplink](https://github.com/techkh/deeplink_listener/blob/prod/example/ios/Runner/Info.plist)
 
 
 *** how to run Testing in local ***
-** Make sure you config all **
+Make sure you config all 
 1. Android can run  adb by add  echo 'export PATH="$PATH:/Users/nemo/Library/Android/sdk/platform-tools"' >> ~/.zprofile, your .zsrc
 ```dart
 

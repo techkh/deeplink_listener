@@ -1,4 +1,4 @@
-package com.deepershort.deeplink_app_listener
+package com.deepershort.deeplink_listener
 
 
 import android.content.Intent
