@@ -1,13 +1,13 @@
 import Flutter
 import UIKit
 
-public class DeeplinkAppListnerPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
+public class DeeplinkListenerPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
   var eventSink: FlutterEventSink?
   var initialLink: String?
   var pendingLinks: [String] = []
 
   public static func register(with registrar: FlutterPluginRegistrar) {
-    let instance = DeeplinkAppListnerPlugin()
+    let instance = DeeplinkListenerPlugin()
 
     let channel = FlutterMethodChannel(name: "deeplink_listener",
                                        binaryMessenger: registrar.messenger())

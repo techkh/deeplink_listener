@@ -13,8 +13,8 @@ import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 
-/** DeeplinkAppListnerPlugin */
-class DeeplinkAppListnerPlugin : FlutterPlugin,
+/** DeeplinkListenerPlugin */
+class DeeplinkListenerPlugin : FlutterPlugin,
     MethodChannel.MethodCallHandler,
     EventChannel.StreamHandler,
     ActivityAware {
