@@ -73,7 +73,7 @@ DeeplinkListener.getInitialLink().then((link) {
       if (link != null) _handleDeepLink(link);
 });
 ```
-***&#11088; Stream for incoming links ***
+&#11088; Stream for incoming links
 -  Get all time when app live and in background.
 ```dart
  DeeplinkListener.linkStream.listen(
@@ -119,13 +119,12 @@ void dispose() {
 }
 ```
 
-*** Deeplink Config See ***
+### Deeplink Config See 
 1. [Andoid Deeplink](https://github.com/techkh/deeplink_listener/blob/prod/example/android/app/src/main/AndroidManifest.xml)
 
 2. [IOS Deeplink](https://github.com/techkh/deeplink_listener/blob/prod/example/ios/Runner/Info.plist)
 
-
-*** how to run Testing in local ***
+### how to run Testing in local
 Make sure you config all 
 1. Android can run  adb by add  echo 'export PATH="$PATH:/Users/nemo/Library/Android/sdk/platform-tools"' >> ~/.zprofile, your .zsrc
 ```dart
