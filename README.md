@@ -8,8 +8,8 @@
 Handling Custom Deep Links and Universal Links
 Deep linking allows your app to respond to links, whether they come from emails, websites, or other apps. There are two main types:
 
-1. Custom URL Schemes – Works on both iOS and Android, but users are prompted if the app is not installed. 
-2. Universal Links / App Links – Standardized, secure, and seamless links that open the app if installed or fallback to the website if not. 
+- Custom URL Schemes – Works on both iOS and Android for listen custom deeplink.
+- Universal Links / App Links both IOS and Anroid for listen Universal Links.
 
 ## Befor use
 if you are using Universal links  your must be config you servr support IOS and Android handle deeplink
@@ -52,7 +52,7 @@ Add the following line to `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  deeplink_listener: ^1.0.1
+  deeplink_listener: ^1.0.2
 ```
 
 ### Basic setup
