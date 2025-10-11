@@ -52,7 +52,7 @@ Add the following line to `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  deeplink_listener: ^1.0.0
+  deeplink_listener: ^1.0.1
 ```
 
 ### Basic setup
