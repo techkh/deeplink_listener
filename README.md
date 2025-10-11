@@ -65,7 +65,7 @@ StreamSubscription<String>? _linkSub;
 String _deeplinkResult = 'Unknown';
 ```
 
-***&#11088; Initial cold start ***
+&#11088; Initial cold start 
 - Get first time app never open and not active.
 ```dart
 DeeplinkListener.getInitialLink().then((link) {
@@ -86,7 +86,7 @@ DeeplinkListener.getInitialLink().then((link) {
       },
 );
 ```
-***Funtion Handller***
+### Funtion Handller
 ```dart
  // Listen for links when app is already running
   void _listenForDeepLinks() {
@@ -110,7 +110,7 @@ DeeplinkListener.getInitialLink().then((link) {
     print("Handling deep link: $link");
   }
 ```
-***Note Don't forget cancel _linkSub before your view dispose ***
+### Note Don't forget cancel _linkSub before your view dispose 
 ```dart
 @override
 void dispose() {
