@@ -138,7 +138,7 @@ adb shell am start -a android.intent.action.VIEW -d "myapp://open"
 
 ```
 
-2. IOS no need you just : Open brother safari 
+2. IOS no need you just : Open browser safari 
 ```dart
 //Open Custom deeplink
 myapp://
