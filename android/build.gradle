@@ -25,7 +25,7 @@ apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 
 android {
-    namespace = "com.example.deeplink_listener"
+    namespace = "com.deepershort.deeplink_app_listener"
 
     compileSdk = 36
 
