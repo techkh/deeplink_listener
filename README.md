@@ -52,7 +52,7 @@ Add the following line to `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  deeplink_listener: ^1.0.2
+  deeplink_listener: ^1.0.3
 ```
 
 ### Basic setup
@@ -76,7 +76,7 @@ DeeplinkListener.getInitialLink().then((link) {
 &#11088; Stream for incoming links
 -  Get all time when app live and in background.
 ```dart
- DeeplinkListener.linkStream.listen(
+ _linkSub = DeeplinkListener.linkStream.listen(
       (link) {
         print('[Dart] linkStream received: $link');
         _handleDeepLink(link);
@@ -86,21 +86,9 @@ DeeplinkListener.getInitialLink().then((link) {
       },
 );
 ```
+
 ### Funtion Handller
 ```dart
- // Listen for links when app is already running
-  void _listenForDeepLinks() {
-    _linkSub = DeeplinkListener.linkStream.listen(
-      (link) {
-        print("Incoming deep link: $link");
-        _handleDeepLink(link);
-      },
-      onError: (err) {
-        print("Deep link stream error: $err");
-      },
-    );
-  }
-
   // Example handler
   void _handleDeepLink(String link) {
     // Do something with the link (e.g., navigation)
@@ -134,7 +122,7 @@ Make sure you config all
 //Open Custom deeplink
 adb shell am start -a android.intent.action.VIEW -d "myapp://open"
 //Open Universal Links
- adb shell am start -a android.intent.action.VIEW -d "link.deepershort.com"
+ adb shell am start -a android.intent.action.VIEW -d "link.yourdomain.com"
 
 ```
 

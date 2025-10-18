@@ -1,8 +1,8 @@
+import 'package:deeplink_listener/deeplink_listener.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:deeplink_listener/deeplink_listener.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,26 +32,13 @@ class _MyAppState extends State<MyApp> {
     });
 
     // Stream for incoming links
-    DeeplinkListener.linkStream.listen(
+    _linkSub = DeeplinkListener.linkStream.listen(
       (link) {
         print('[Dart] linkStream received: $link');
         _handleDeepLink(link);
       },
       onError: (err) {
         print('[Dart] linkStream error: $err');
-      },
-    );
-  }
-
-  // Listen for links when app is already running
-  void _listenForDeepLinks() {
-    _linkSub = DeeplinkListener.linkStream.listen(
-      (link) {
-        print("Incoming deep link: $link");
-        _handleDeepLink(link);
-      },
-      onError: (err) {
-        print("Deep link stream error: $err");
       },
     );
   }
