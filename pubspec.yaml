@@ -1,6 +1,6 @@
 name: deeplink_listener
 description: "Deep linking allows your app to respond to links, whether they come from emails, websites, or other apps."
-version: 1.0.2
+version: 1.0.3
 homepage: https://github.com/techkh/deeplink_listener
 
 environment:

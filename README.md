@@ -40,7 +40,32 @@ IOS to create https://yourdomain.com/.well-known/apple-app-site-association
   }
 }
 ```
+## Updated AppDelegate for IOS
+```yaml
+@main
+@objc class AppDelegate: FlutterAppDelegate {
+  override func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+  ) -> Bool {
+    GeneratedPluginRegistrant.register(with: self)
+    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+  }
 
+  // Forward universal link calls to Flutter plugins
+  override func application(_ application: UIApplication,
+                              continue userActivity: NSUserActivity,
+                              restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        return super.application(application, continue: userActivity, restorationHandler: restorationHandler)
+  }
+
+  override func application(_ app: UIApplication,
+                              open url: URL,
+                              options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        return super.application(app, open: url, options: options)
+  }
+}
+```
 ## Usage
 
 Make sure to check out [examples](https://github.com/techkh/deeplink_listener/tree/prod/example)
