@@ -19,17 +19,20 @@ import deeplink_listener // 👈 important: import your plugin module
         continue userActivity: NSUserActivity,
         restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
     ) -> Bool {
-        DeeplinkListenerPlugin.handleUserActivity(userActivity)
-        return super.application(application, continue: userActivity, restorationHandler: restorationHandler)
+      if  DeeplinkListenerPlugin.handleUserActivity(userActivity) {
+          return true
+      }
+      return false
     }
-
     // MARK: - Custom URL Schemes
     override func application(
         _ app: UIApplication,
         open url: URL,
         options: [UIApplication.OpenURLOptionsKey : Any] = [:]
     ) -> Bool {
-        DeeplinkListenerPlugin.handleOpenURL(url)
-        return super.application(app, open: url, options: options)
+        if DeeplinkListenerPlugin.handleOpenURL(url) {
+          return true
+        }
+        return false
     }
 }

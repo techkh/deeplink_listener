@@ -3,7 +3,7 @@ import UIKit
 
 @objc public class DeeplinkListenerPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
 
-    // Singleton instance
+    // MARK: - Singleton
     public static let shared = DeeplinkListenerPlugin()
 
     private var eventSink: FlutterEventSink?
@@ -59,30 +59,41 @@ import UIKit
         return nil
     }
 
-    // MARK: - Handle URL
+    // MARK: - Handle incoming URL
     private func handleLink(_ url: URL) {
         let link = url.absoluteString
+        print("[DeeplinkListenerPlugin] Received URL: \(link)")
 
         if initialLink == nil {
             initialLink = link
         }
 
         if let sink = eventSink {
-            sink(link)
+            DispatchQueue.main.async {
+                sink(link)
+            }
         } else {
             pendingLinks.append(link)
         }
     }
 
-    // MARK: - Public methods for AppDelegate forwarding
-    public static func handleUserActivity(_ userActivity: NSUserActivity) {
+    // MARK: - Public AppDelegate Forwarding
+
+    /// Handles Universal Links. Returns true if URL handled, preventing Safari
+    @discardableResult
+    public static func handleUserActivity(_ userActivity: NSUserActivity) -> Bool {
         if userActivity.activityType == NSUserActivityTypeBrowsingWeb,
            let url = userActivity.webpageURL {
             shared.handleLink(url)
+            return true // ⚡ prevents Safari
         }
+        return false
     }
 
-    public static func handleOpenURL(_ url: URL) {
+    /// Handles custom URL schemes. Returns true if URL handled
+    @discardableResult
+    public static func handleOpenURL(_ url: URL) -> Bool {
         shared.handleLink(url)
+        return true
     }
 }
