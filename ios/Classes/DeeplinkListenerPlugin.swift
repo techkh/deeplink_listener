@@ -1,79 +1,88 @@
 import Flutter
 import UIKit
 
-public class DeeplinkListenerPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
-  var eventSink: FlutterEventSink?
-  var initialLink: String?
-  var pendingLinks: [String] = []
+@objc public class DeeplinkListenerPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
 
-  public static func register(with registrar: FlutterPluginRegistrar) {
-    let instance = DeeplinkListenerPlugin()
+    // Singleton instance
+    public static let shared = DeeplinkListenerPlugin()
 
-    let channel = FlutterMethodChannel(name: "deeplink_listener",
-                                       binaryMessenger: registrar.messenger())
-    registrar.addMethodCallDelegate(instance, channel: channel)
+    private var eventSink: FlutterEventSink?
+    private var initialLink: String?
+    private var pendingLinks: [String] = []
 
-    let eventChannel = FlutterEventChannel(name: "deeplink_listener/events",
-                                           binaryMessenger: registrar.messenger())
-    eventChannel.setStreamHandler(instance)
+    // MARK: - Plugin Registration
+    public static func register(with registrar: FlutterPluginRegistrar) {
+        let instance = DeeplinkListenerPlugin.shared
 
-    registrar.addApplicationDelegate(instance)
-  }
+        // Method channel
+        let methodChannel = FlutterMethodChannel(
+            name: "deeplink_listener",
+            binaryMessenger: registrar.messenger()
+        )
+        registrar.addMethodCallDelegate(instance, channel: methodChannel)
 
-  public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    switch call.method {
-    case "getInitialLink":
-      result(initialLink)
-    default:
-      result(FlutterMethodNotImplemented)
-    }
-  }
+        // Event channel
+        let eventChannel = FlutterEventChannel(
+            name: "deeplink_listener/events",
+            binaryMessenger: registrar.messenger()
+        )
+        eventChannel.setStreamHandler(instance)
 
-  @objc public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
-    self.eventSink = events
-
-    for link in pendingLinks {
-      events(link)
-    }
-    pendingLinks.removeAll()
-
-    return nil
-  }
-
-  @objc public func onCancel(withArguments arguments: Any?) -> FlutterError? {
-    eventSink = nil
-    return nil
-  }
-
-  private func handleLink(_ url: URL) {
-    let link = url.absoluteString
-
-    if initialLink == nil {
-      initialLink = link
+        registrar.addApplicationDelegate(instance)
     }
 
-    if let sink = eventSink {
-      sink(link)
-    } else {
-      pendingLinks.append(link)
+    // MARK: - Method calls
+    public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        switch call.method {
+        case "getInitialLink":
+            result(initialLink)
+        default:
+            result(FlutterMethodNotImplemented)
+        }
     }
-  }
 
-  public func application(_ application: UIApplication,
-                          open url: URL,
-                          options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-    handleLink(url)
-    return true
-  }
+    // MARK: - Event channel
+    public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
+        self.eventSink = events
 
-  public func application(_ application: UIApplication,
-                          continue userActivity: NSUserActivity,
-                          restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-    if userActivity.activityType == NSUserActivityTypeBrowsingWeb,
-       let url = userActivity.webpageURL {
-      handleLink(url)
-      return true
+        // Send any pending links
+        for link in pendingLinks {
+            events(link)
+        }
+        pendingLinks.removeAll()
+
+        return nil
     }
-    return false
-  }
+
+    public func onCancel(withArguments arguments: Any?) -> FlutterError? {
+        eventSink = nil
+        return nil
+    }
+
+    // MARK: - Handle URL
+    private func handleLink(_ url: URL) {
+        let link = url.absoluteString
+
+        if initialLink == nil {
+            initialLink = link
+        }
+
+        if let sink = eventSink {
+            sink(link)
+        } else {
+            pendingLinks.append(link)
+        }
+    }
+
+    // MARK: - Public methods for AppDelegate forwarding
+    public static func handleUserActivity(_ userActivity: NSUserActivity) {
+        if userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+           let url = userActivity.webpageURL {
+            shared.handleLink(url)
+        }
+    }
+
+    public static func handleOpenURL(_ url: URL) {
+        shared.handleLink(url)
+    }
 }

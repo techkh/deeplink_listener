@@ -52,11 +52,10 @@ packages:
   deeplink_listener:
     dependency: "direct main"
     description:
-      name: deeplink_listener
-      sha256: cdfc220e383732f20284404f797e7a4808ee947d572fc2652b36bd02875ea48d
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.2"
+      path: ".."
+      relative: true
+    source: path
+    version: "1.0.3"
   fake_async:
     dependency: transitive
     description:

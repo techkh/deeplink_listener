@@ -40,30 +40,35 @@ IOS to create https://yourdomain.com/.well-known/apple-app-site-association
   }
 }
 ```
-## Updated AppDelegate for IOS
+## Update AppDelegate for IOS
 ```yaml
-@main
+
+import deeplink_listener // 👈 important: import your plugin module
+
 @objc class AppDelegate: FlutterAppDelegate {
-  override func application(
-    _ application: UIApplication,
-    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-  ) -> Bool {
-    GeneratedPluginRegistrant.register(with: self)
-    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
-  }
 
-  // Forward universal link calls to Flutter plugins
-  override func application(_ application: UIApplication,
-                              continue userActivity: NSUserActivity,
-                              restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+    //other
+
+
+    // MARK: - Universal Link
+    override func application(
+        _ application: UIApplication,
+        continue userActivity: NSUserActivity,
+        restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
+    ) -> Bool {
+        DeeplinkListenerPlugin.handleUserActivity(userActivity)
         return super.application(application, continue: userActivity, restorationHandler: restorationHandler)
-  }
+    }
 
-  override func application(_ app: UIApplication,
-                              open url: URL,
-                              options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    // MARK: - Custom URL Schemes
+    override func application(
+        _ app: UIApplication,
+        open url: URL,
+        options: [UIApplication.OpenURLOptionsKey : Any] = [:]
+    ) -> Bool {
+        DeeplinkListenerPlugin.handleOpenURL(url)
         return super.application(app, open: url, options: options)
-  }
+    }
 }
 ```
 ## Usage
@@ -77,7 +82,7 @@ Add the following line to `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  deeplink_listener: ^1.0.3
+  deeplink_listener: ^1.0.4
 ```
 
 ### Basic setup
